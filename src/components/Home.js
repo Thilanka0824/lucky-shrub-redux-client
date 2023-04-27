@@ -1,46 +1,63 @@
-import React, {useEffect} from 'react'
-import { Box, Button, Container, Typography } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
-import { authCheck, authFailure, authLogout, authSuccess } from '../redux/authSlice';
-import {checkAuthToken} from '../lib/checkAuthToken'
+import React, { useEffect } from "react";
+import { Box, Button, Container, Typography } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  authCheck,
+  authFailure,
+  authLogout,
+  authSuccess,
+} from "../redux/authSlice";
+import { checkAuthToken } from "../lib/checkAuthToken";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const Home = () => {
-    const dispatch = useDispatch()
-    const user = useSelector( state => state.user )
-    const auth = useSelector( state => state.auth.isAuth )
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const auth = useSelector((state) => state.auth.isAuth);
 
-    useEffect(() => {
-      // let authy = checkAuthToken()
-      // authy ? dispatch(authSuccess())
-      // :
-      // dispatch(authFailure())
-      dispatch(authCheck())
-    }, [])
-    
+  useEffect(() => {
+    // let authy = checkAuthToken()
+    // authy ? dispatch(authSuccess())
+    // :
+    // dispatch(authFailure())
+    dispatch(authCheck());
+  }, []);
 
   return (
-    <Container 
-        maxWidth='lg'
+    <Box
+      sx={{
+        backgroundImage: `url('/image-assets/home-main-photo-lucky-shrub.jpeg')`,
+        backgroundSize: "cover",
+        backgroundPosition: "left",
+        backgroundRepeat: "no-repeat",
+        minHeight: "100vh",
+        paddingTop: isSmallScreen ? theme.spacing(2) : theme.spacing(4),
+      }}
     >
-    <Box 
-      maxWidth='xs' 
-      m={3} 
-    >
-        <Typography variant='h1'>
-          Please Login
-        </Typography>
+      <Container maxWidth="lg">
+        <Box maxWidth="xs" m={3}>
+          <Typography variant="h1">Please Login</Typography>
+        </Box>
+        {auth ? (
+          <Button variant="contained" onClick={() => dispatch(authLogout())}>
+            Logout
+          </Button>
+        ) : (
+          <>
+            <Button variant="contained" href="/login">
+              Login
+            </Button>
+            <Button variant="contained" href="/register">
+              Register
+            </Button>
+          </>
+        )}
+      </Container>
     </Box>
-    {
-      auth ? 
-      <Button variant='contained' onClick={() => dispatch(authLogout())}>Logout</Button>
-      :
-      <>
-        <Button variant='contained' href='/login'>Login</Button>
-        <Button variant='contained' href='/register'>Register</Button>
-      </>
-    }
-  </Container>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
