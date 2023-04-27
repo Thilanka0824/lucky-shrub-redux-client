@@ -19,8 +19,10 @@ import Button from "@mui/material/Button";
 import { Tooltip } from "@mui/material";
 import { Link } from "@mui/material";
 import { Avatar } from "@mui/material";
-
+import { authLogout } from "../redux/authSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { Link as RouterLink } from "react-router-dom";
+
 
 const drawerWidth = 240;
 const navItems = ["Design Packages", "How It Works", "Contact"];
@@ -42,6 +44,7 @@ function ElevationScroll(props) {
 function ElevateAppBar(props) {
   const user = useSelector((state) => state.user);
   const auth = useSelector((state) => state.auth.isAuth);
+  const dispatch = useDispatch();
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -106,54 +109,84 @@ function ElevateAppBar(props) {
             <Box
               sx={{
                 display: { xs: "none", sm: "none", md: "flex" },
+                gap: 1,
               }}
             >
               {navItems.map((item) => (
                 <Button
                   key={item}
-                  sx={{ color: "#fff" }}
+                  sx={{ color: "#000000" }}
                   component={Link}
                   to={item === "Design Packages" ? "/designpackages" : ""}
                 >
                   {item}
                 </Button>
               ))}
-            </Box>
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    variant="rounded"
-                    sx={{
-                      backgroundColor: (theme) => theme.palette.secondary.main,
+
+              {auth ? (
+                <Box
+                  sx={{
+                    display: { xs: "none", sm: "none", md: "flex" },
+                    gap: 1,
+                  }}
+                >
+                  <Button
+                    sx={{ color: "#000000", textTransform: "none", }}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      dispatch(authLogout());
                     }}
                   >
-                    {user ? user.username[0] : "U"}
-                  </Avatar>
-                </IconButton>
-              </Tooltip>
-              {/* <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu> */}
+                    <Link
+                      component={RouterLink}
+                      to="/"
+                      sx={{
+                        color: "inherit",
+                        border: "1px solid #000000",
+                        borderRadius: "5px",
+                        pt: "1px",
+                        pb: "1px",
+                        pl: "5px",
+                        pr: "5px",
+                        textDecoration: "none",
+                        "&:hover": {
+                          textDecoration: "underline",
+                        },
+                      }}
+                    >
+                      <Typography variant="h6">Logout</Typography>
+                    </Link>
+                  </Button>
+
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar
+                        variant="rounded"
+                        sx={{
+                          backgroundColor: (theme) =>
+                            theme.palette.secondary.main,
+                        }}
+                      >
+                        {user ? user.username[0] : "U"}
+                      </Avatar>
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+              ) : (
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      variant="rounded"
+                      sx={{
+                        backgroundColor: (theme) =>
+                          theme.palette.secondary.main,
+                      }}
+                    >
+                      {user ? user.username[0] : "U"}
+                    </Avatar>
+                  </IconButton>
+                </Tooltip>
+              )}
             </Box>
           </Toolbar>
         </AppBar>
