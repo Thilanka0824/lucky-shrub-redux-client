@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/Home";
@@ -6,6 +5,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import Layout from "./components/Layout";
 import DesignPackages from "./components/DesignPackages";
+import Cart from "./components/Cart";
 
 function App() {
   const router = createBrowserRouter([
@@ -20,6 +20,10 @@ function App() {
         {
           path: "/designpackages",
           element: <DesignPackages />,
+        },
+        {
+          path: "/cart",
+          element: <Cart />,
         },
       ],
     },

@@ -22,6 +22,8 @@ import { Avatar } from "@mui/material";
 import { authLogout } from "../redux/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Badge from "@mui/material/Badge";
 
 
 const drawerWidth = 240;
@@ -44,6 +46,7 @@ function ElevationScroll(props) {
 function ElevateAppBar(props) {
   const user = useSelector((state) => state.user);
   const auth = useSelector((state) => state.auth.isAuth);
+  const totalQuantity = useSelector((state) => state.cart.totalQuantity)
   const dispatch = useDispatch();
 
   const { window } = props;
@@ -131,7 +134,7 @@ function ElevateAppBar(props) {
                   }}
                 >
                   <Button
-                    sx={{ color: "#000000", textTransform: "none", }}
+                    sx={{ color: "#000000", textTransform: "none" }}
                     onClick={(event) => {
                       event.preventDefault();
                       dispatch(authLogout());
@@ -157,6 +160,18 @@ function ElevateAppBar(props) {
                       <Typography variant="h6">Logout</Typography>
                     </Link>
                   </Button>
+                  <Box
+                    sx={{
+                      display: { xs: "none", sm: "none", md: "flex" },
+                      gap: 1,
+                    }}
+                  >
+                    <IconButton component={RouterLink} to="/cart">
+                      <Badge badgeContent={totalQuantity} color="primary">
+                        <ShoppingCartIcon />
+                      </Badge>
+                    </IconButton>
+                  </Box>
 
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
