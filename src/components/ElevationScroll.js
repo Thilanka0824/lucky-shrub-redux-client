@@ -1,32 +1,28 @@
-import * as React from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
-import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
-import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
-import Button from "@mui/material/Button";
-import { Tooltip } from "@mui/material";
-import { Link } from "@mui/material";
-import { Avatar } from "@mui/material";
-import { authLogout } from "../redux/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
+import Avatar from "@mui/material/Avatar";
+import { useNavigate } from "react-router-dom";
+import { authLogout } from "../redux/authSlice";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import { Tooltip } from "@mui/material";
+import { Link } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 const navItems = ["Design Packages", "How It Works", "Contact"];
@@ -37,37 +33,15 @@ const settings = [
   { text: "Logout", route: "/" },
 ];
 
-function ElevationScroll(props) {
-  const { children, window } = props;
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 0,
-    target: window ? window() : undefined,
-  });
-
-  return React.cloneElement(children, {
-    elevation: trigger ? 4 : 0,
-  });
-}
-
-function ElevateAppBar(props) {
+function ElevateAppBar() {
   const user = useSelector((state) => state.user);
   const auth = useSelector((state) => state.auth.isAuth);
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const handleProfileClick = () => {
-    if (!auth) {
-      navigate("/login");
-    } else {
-      handleOpenUserMenu();
-    }
-  };
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -81,6 +55,9 @@ function ElevateAppBar(props) {
     setAnchorElUser(null);
   };
 
+  //this is for the drawer
+  const container = undefined;
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
@@ -92,7 +69,7 @@ function ElevateAppBar(props) {
           <ListItem key={item} disablePadding>
             <ListItemButton
               sx={{ textAlign: "center" }}
-              component={Link}
+              component={RouterLink}
               to={item === "Design Packages" ? "/designpackages" : ""}
             >
               <ListItemText primary={item} />
@@ -103,130 +80,98 @@ function ElevateAppBar(props) {
     </Box>
   );
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-
   return (
     <React.Fragment>
       <CssBaseline />
-      <ElevationScroll {...props}>
-        <AppBar component="nav">
-          <Toolbar>
+      <AppBar>
+        <Toolbar>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
             <IconButton
               color="inherit"
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{ mr: 2 }}
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Scroll to elevate App bar
-            </Typography>
+
+            <Link component={RouterLink} to="/">
+
+            <img
+              src="/image-assets/lucky-shrub-green.png"
+              alt="Logo"
+              width="35rem"
+              style={{ margin: 7, cursor: "pointer" }}
+            />
+            </Link>
 
             <Box
               sx={{
-                display: { xs: "none", sm: "none", md: "flex" },
-                gap: 1,
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
               }}
             >
-              {navItems.map((item) => (
-                <Button
-                  key={item}
-                  sx={{ color: "#000000" }}
-                  component={Link}
-                  to={item === "Design Packages" ? "/designpackages" : ""}
-                >
-                  {item}
-                </Button>
-              ))}
+              <IconButton component={RouterLink} to="/cart">
+                <Badge badgeContent={totalQuantity} color="primary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
 
-              {auth ? (
-                <Box
-                  sx={{
-                    display: { xs: "none", sm: "none", md: "flex" },
-                    gap: 1,
-                  }}
-                >
-                
-                  <Box
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar
+                    variant="rounded"
                     sx={{
-                      display: { xs: "none", sm: "none", md: "flex" },
-                      gap: 1,
+                      backgroundColor: (theme) => theme.palette.secondary.main,
                     }}
                   >
-                    <IconButton component={RouterLink} to="/cart">
-                      <Badge badgeContent={totalQuantity} color="primary">
-                        <ShoppingCartIcon />
-                      </Badge>
-                    </IconButton>
-                  </Box>
-                    
-                  <Tooltip title="Open settings">
-                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar
-                        variant="rounded"
-                        sx={{
-                          backgroundColor: (theme) =>
-                            theme.palette.secondary.main,
-                        }}
-                      >
-                        {user ? user.username[0] : "U"}
-                      </Avatar>
-                    </IconButton>
-                  </Tooltip>
-                  <Menu
-                    anchorEl={anchorElUser}
-                    open={Boolean(anchorElUser)}
-                    onClose={handleCloseUserMenu}
-                  >
-                    {settings.map((item) =>
-                      item.text === "Logout" ? (
-                        <MenuItem
-                          key={item.text}
-                          onClick={(event) => {
-                            event.preventDefault();
-                            dispatch(authLogout());
-                            handleCloseUserMenu();
-                          }}
-                          component={RouterLink}
-                          to={item.route}
-                        >
-                          {item.text}
-                        </MenuItem>
-                      ) : (
-                        <MenuItem
-                          key={item.text}
-                          onClick={handleCloseUserMenu}
-                          component={RouterLink}
-                          to={item.route}
-                        >
-                          {item.text}
-                        </MenuItem>
-                      )
-                    )}
-                  </Menu>
-                </Box>
-              ) : (
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar
-                      variant="rounded"
-                      sx={{
-                        backgroundColor: (theme) =>
-                          theme.palette.secondary.main,
+                    {user ? user.username[0] : "U"}
+                  </Avatar>
+                </IconButton>
+              </Tooltip>
+              <Menu
+                anchorEl={anchorElUser}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((item) =>
+                  item.text === "Logout" ? (
+                    <MenuItem
+                      key={item.text}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        dispatch(authLogout());
+                        handleCloseUserMenu();
                       }}
+                      component={RouterLink}
+                      to={item.route}
                     >
-                      {user ? user.username[0] : "U"}
-                    </Avatar>
-                  </IconButton>
-                </Tooltip>
-              )}
+                      {item.text}
+                    </MenuItem>
+                  ) : (
+                    <MenuItem
+                      key={item.text}
+                      onClick={handleCloseUserMenu}
+                      component={RouterLink}
+                      to={item.route}
+                    >
+                      {item.text}
+                    </MenuItem>
+                  )
+                )}
+              </Menu>
             </Box>
-          </Toolbar>
-        </AppBar>
-      </ElevationScroll>
+          </Box>
+        </Toolbar>
+      </AppBar>
+
       <Box component="nav">
         <Drawer
           container={container}
