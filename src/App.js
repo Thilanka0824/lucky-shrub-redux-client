@@ -6,6 +6,8 @@ import Login from "./components/Login";
 import Layout from "./components/Layout";
 import DesignPackages from "./components/DesignPackages";
 import Cart from "./components/Cart";
+import Profile from "./components/Profile";
+
 
 function App() {
   const router = createBrowserRouter([
@@ -25,6 +27,10 @@ function App() {
           path: "/cart",
           element: <Cart />,
         },
+        {
+          path: "/profile",
+          element: <Profile />,
+        }
       ],
     },
     {

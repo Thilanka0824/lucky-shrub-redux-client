@@ -11,12 +11,14 @@ const cartSlice = createSlice({
   reducers: {
     addItem: (state, action) => {
       const item = action.payload;
-      const existingItem = state.items[item.id];
+      const existingItem = state.items[item.id]; // the bracket notation is used to access the property of an object using a variable. In this case, the variable is item.id. If we used dot notation, it would be state.items.item.id, which is not what we want. because we want to access the property of the object using the value of the variable item.id, not the string "item.id"
 
+      // If item is not in cart, add it
       if (!existingItem) {
         state.items[item.id] = {
           ...item,
           quantity: 1,
+          image: item.image,
         };
       } else {
         existingItem.quantity++;

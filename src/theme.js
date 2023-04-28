@@ -4,13 +4,16 @@ const theme = createTheme({
     palette: {
         mode: 'light',
         primary: {
-            main: '#f7f5f4'
+            main: '#ffffff'
         },
         secondary: {
             main: '#40ff00'
         }
         
-    }
+    },
+    // typography: {
+    //     fontFamily: 'Roboto',
+    // }
 })
 
 export default theme;

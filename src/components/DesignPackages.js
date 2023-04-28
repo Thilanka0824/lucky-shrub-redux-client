@@ -17,6 +17,8 @@ import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Grow from "@mui/material/Grow";
+import { addItem } from "../redux/cartSlice";
+import { useDispatch } from "react-redux";
 
 function Copyright() {
   return (
@@ -133,6 +135,11 @@ const theme = createTheme();
 
 export default function Album() {
   const [checked, setChecked] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (item) => {
+    dispatch(addItem(item));
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => setChecked(true), 100);
@@ -241,6 +248,7 @@ export default function Album() {
                         variant="outlined"
                         size="large"
                         sx={buttonStyleBlack}
+                        onClick={() => handleAddToCart({ ...item, id: index })}
                       >
                         Starting at {item.price}
                       </Button>

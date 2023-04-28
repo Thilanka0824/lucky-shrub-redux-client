@@ -24,11 +24,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
-
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 const navItems = ["Design Packages", "How It Works", "Contact"];
-// const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = [
+  { text: "Profile", route: "/profile" },
+  { text: "Account", route: "/account" },
+  { text: "Dashboard", route: "/dashboard" },
+  { text: "Logout", route: "/" },
+];
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -46,12 +53,21 @@ function ElevationScroll(props) {
 function ElevateAppBar(props) {
   const user = useSelector((state) => state.user);
   const auth = useSelector((state) => state.auth.isAuth);
-  const totalQuantity = useSelector((state) => state.cart.totalQuantity)
+  const totalQuantity = useSelector((state) => state.cart.totalQuantity);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const handleProfileClick = () => {
+    if (!auth) {
+      navigate("/login");
+    } else {
+      handleOpenUserMenu();
+    }
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -103,7 +119,7 @@ function ElevateAppBar(props) {
               onClick={handleDrawerToggle}
               sx={{ mr: 2 }}
             >
-              {/* <MenuIcon /> */}
+              <MenuIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Scroll to elevate App bar
@@ -133,33 +149,7 @@ function ElevateAppBar(props) {
                     gap: 1,
                   }}
                 >
-                  <Button
-                    sx={{ color: "#000000", textTransform: "none" }}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      dispatch(authLogout());
-                    }}
-                  >
-                    <Link
-                      component={RouterLink}
-                      to="/"
-                      sx={{
-                        color: "inherit",
-                        border: "1px solid #000000",
-                        borderRadius: "5px",
-                        pt: "1px",
-                        pb: "1px",
-                        pl: "5px",
-                        pr: "5px",
-                        textDecoration: "none",
-                        "&:hover": {
-                          textDecoration: "underline",
-                        },
-                      }}
-                    >
-                      <Typography variant="h6">Logout</Typography>
-                    </Link>
-                  </Button>
+                
                   <Box
                     sx={{
                       display: { xs: "none", sm: "none", md: "flex" },
@@ -172,7 +162,7 @@ function ElevateAppBar(props) {
                       </Badge>
                     </IconButton>
                   </Box>
-
+                    
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar
@@ -186,6 +176,37 @@ function ElevateAppBar(props) {
                       </Avatar>
                     </IconButton>
                   </Tooltip>
+                  <Menu
+                    anchorEl={anchorElUser}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {settings.map((item) =>
+                      item.text === "Logout" ? (
+                        <MenuItem
+                          key={item.text}
+                          onClick={(event) => {
+                            event.preventDefault();
+                            dispatch(authLogout());
+                            handleCloseUserMenu();
+                          }}
+                          component={RouterLink}
+                          to={item.route}
+                        >
+                          {item.text}
+                        </MenuItem>
+                      ) : (
+                        <MenuItem
+                          key={item.text}
+                          onClick={handleCloseUserMenu}
+                          component={RouterLink}
+                          to={item.route}
+                        >
+                          {item.text}
+                        </MenuItem>
+                      )
+                    )}
+                  </Menu>
                 </Box>
               ) : (
                 <Tooltip title="Open settings">
