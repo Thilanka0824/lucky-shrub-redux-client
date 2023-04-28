@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Box,
@@ -16,6 +16,18 @@ import { CardMedia } from "@mui/material";
 export default function Cart() {
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    const newTotalPrice = Object.values(cartItems).reduce(
+      (accumulator, currentItem) => {
+        return accumulator + currentItem.price * currentItem.quantity;
+      },
+      0
+    );
+    setTotalPrice(newTotalPrice);
+    console.log("totalPrice", totalPrice)
+  }, [cartItems]);
 
   const handleRemoveItem = (itemId) => {
     dispatch(removeItem(itemId));
@@ -24,8 +36,6 @@ export default function Cart() {
   const handleUpdateItemQuantity = (itemId, newQuantity) => {
     dispatch(updateItemQuantity({ itemId, newQuantity }));
   };
-
-
 
   return (
     <Box
@@ -38,6 +48,9 @@ export default function Cart() {
     >
       <Typography variant="h4" component="h2" gutterBottom>
         Shopping Cart
+      </Typography>
+      <Typography variant="h6" component="p">
+        Total Price: ${totalPrice.toFixed(2)}
       </Typography>
       {Object.values(cartItems).map((item) => (
         <Card key={item.id} sx={{ marginBottom: 2 }}>
@@ -58,8 +71,7 @@ export default function Cart() {
               </Grid>
               <Grid item xs={3} sm={4}>
                 <Typography variant="h6" component="span">
-                  {`${item.title}`}  {`${item.price}`}
-                 
+                  {`${item.title}`} {`${item.price}`}
                 </Typography>
               </Grid>
               <Grid item xs={4} sm={4}>
@@ -88,7 +100,7 @@ export default function Cart() {
                   </IconButton>
                 </Box>
               </Grid>
-                
+
               <Grid item xs={2} sm={2}>
                 <IconButton
                   onClick={() => handleRemoveItem(item.id)}

@@ -1,37 +1,18 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-
 import Button from "@mui/material/Button";
-
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
-
 import Box from "@mui/material/Box";
-
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Link from "@mui/material/Link";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 import Grow from "@mui/material/Grow";
 import { addItem } from "../redux/cartSlice";
 import { useDispatch } from "react-redux";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const imageAssets = [
   "/image-assets/full-yard.jpg",
@@ -47,54 +28,62 @@ const imageAssets = [
 
 const dataObject = [
   {
+    id: "0",
     title: "Full Yard",
     description: "Redesign the landscaping and more for your entire property",
     image: imageAssets[0],
-    price: "$1695",
+    price: 1695,
   },
   {
+    id: "1",
     title: "Back Yard",
     description: "Refresh your backyard landscaping, patio, and more",
     image: imageAssets[1],
-    price: "$1395",
+    price: 1395,
   },
   {
+    id: "2",
     title: "Small Space",
     description: "Transform your small space into a beautiful oasis",
     image: imageAssets[2],
-    price: "$995",
+    price: 995,
   },
   {
+    id: "3",
     title: "Front Yard",
     description: "Redesign your front yard landscaping",
     image: imageAssets[3],
-    price: "$1095",
+    price: 1095,
   },
   {
+    id: "4",
     title: "Curb Appeal",
     description: "Make your home the envy of the neighborhood",
     image: imageAssets[4],
-    price: "$1795",
+    price: 1795,
   },
   {
+    id: "5",
     title: "Outdoor Transformation",
     description:
       "Ready to fully transform your property? Redesign your home exterior and all landscaping",
     image: imageAssets[5],
-    price: "$2495",
+    price: 2495,
   },
   {
+    id: "6",
     title: "Botanical",
     description: "Add a touch of greenery to your home",
     image: imageAssets[6],
-    price: "$895",
+    price: 895,
   },
   {
+    id: "7",
     title: "Premium",
     description:
       "Our most customizable design service, with extra hands-on support",
     image: imageAssets[7],
-    price: "$3495",
+    price: 3495,
   },
   {
     title: "Don't see a package?",
