@@ -1,9 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  items: {}, // {id: {item, quantity}}
-  totalQuantity: 0,
+const loadCartFromLocalStorage = () => {
+  const cartData = localStorage.getItem("cart");
+  if (cartData) {
+    return JSON.parse(cartData);
+  } else {
+    return { items: {}, totalQuantity: 0 };
+  }
 };
+
+const initialState = loadCartFromLocalStorage();
+// const initialState = {
+//   items: {}, // {id: {item, quantity}}
+//   totalQuantity: 0,
+// };
 
 const cartSlice = createSlice({
   name: "cart",
@@ -24,6 +34,7 @@ const cartSlice = createSlice({
         existingItem.quantity++;
       }
       state.totalQuantity++;
+      localStorage.setItem("cart", JSON.stringify(state));
     },
     removeItem: (state, action) => {
       const itemId = action.payload;
@@ -32,6 +43,7 @@ const cartSlice = createSlice({
       if (existingItem) {
         state.totalQuantity -= existingItem.quantity;
         delete state.items[itemId];
+        localStorage.setItem("cart", JSON.stringify(state));
       }
     },
     updateItemQuantity: (state, action) => {
@@ -42,11 +54,13 @@ const cartSlice = createSlice({
         const quantityDifference = newQuantity - existingItem.quantity;
         state.totalQuantity += quantityDifference;
         existingItem.quantity = newQuantity;
+        // setItem() works like a setter function. It sets the value of the key "cart" in localStorage to the value of the state object. The state object is stringified because localStorage can only store strings
+        localStorage.setItem("cart", JSON.stringify(state)); // we need to stringify the state because localStorage can only store strings
       }
     },
   },
 });
 
-export const { addItem, removeItem, updateItemQuantity} = cartSlice.actions;
+export const { addItem, removeItem, updateItemQuantity } = cartSlice.actions;
 
 export default cartSlice.reducer;
