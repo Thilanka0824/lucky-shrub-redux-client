@@ -7,6 +7,7 @@ import Layout from "./components/Layout";
 import DesignPackages from "./components/DesignPackages";
 import Cart from "./components/Cart";
 import Profile from "./components/Profile";
+import DesignPackageDetails from "./components/DesignPackageDetails";
 
 
 function App() {
@@ -22,6 +23,10 @@ function App() {
         {
           path: "/designpackages",
           element: <DesignPackages />,
+        },
+        {
+        path: '/designpackages/:title',
+        element: <DesignPackageDetails />,
         },
         {
           path: "/cart",

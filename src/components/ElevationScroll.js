@@ -83,51 +83,58 @@ function ElevateAppBar() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar>
+      <AppBar sx={{ backgroundColor: "white" }}>
         <Toolbar>
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr",
+              alignItems: "center",
               width: "100%",
             }}
           >
+            {/* Hamburger menu */}
             <IconButton
-              color="inherit"
+              color={"black"}
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
+              sx={{ height: "100", justifySelf: "start" }}
             >
               <MenuIcon />
             </IconButton>
 
-            <Link component={RouterLink} to="/">
-
-            <img
-              src="/image-assets/lucky-shrub-green.png"
-              alt="Logo"
-              width="35rem"
-              style={{ margin: 7, cursor: "pointer" }}
-            />
+            {/* Logo */}
+            <Link component={RouterLink} to="/" sx={{ justifySelf: "center" }}>
+              <img
+                src="/image-assets/lucky-shrub-green.png"
+                alt="Logo"
+                width="35rem"
+                style={{ margin: 7, cursor: "pointer" }}
+              />
             </Link>
 
+            {/* Icons on the right */}
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
                 gap: 2,
+                justifySelf: "end",
               }}
             >
+              {/* Cart icon */}
               <IconButton component={RouterLink} to="/cart">
                 <Badge badgeContent={totalQuantity} color="primary">
-                  <ShoppingCartIcon />
+                  <ShoppingCartIcon fontSize="large" />
                 </Badge>
               </IconButton>
 
+              {/* User avatar */}
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
-                    variant="rounded"
+                    variant="outlined"
                     sx={{
                       backgroundColor: (theme) => theme.palette.secondary.main,
                     }}

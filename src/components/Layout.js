@@ -7,6 +7,7 @@ import ElevationScroll from "./ElevationScroll";
 
 import { authCheck } from "../redux/authSlice";
 import { useSelector, useDispatch } from "react-redux";
+import Footer from "./Footer";
 
 const Layout = (props) => {
   // verify token exists
@@ -26,6 +27,7 @@ const Layout = (props) => {
       <ElevationScroll {...props} />
       {/* {auth ? <Outlet /> : <Navigate to='/login' />} */}
       <Outlet />
+      <Footer/>
     </>
   );
 };
