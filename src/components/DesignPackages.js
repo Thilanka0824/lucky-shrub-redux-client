@@ -357,7 +357,7 @@ export default function Album() {
                             handleAddToCart({ ...item, id: index })
                           }
                         >
-                          Starting at {item.price}
+                          Starting at ${item.price}
                         </Button>
                         <Button
                           component={Link}

@@ -41,18 +41,18 @@ function ElevateAppBar() {
   const navigate = useNavigate();
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null); //this is for the user menu
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+    setAnchorElUser(event.currentTarget); //this sets the anchor for the user menu. the anchor is the button that is clicked to open the menu.
   };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    setAnchorElUser(null); 
   };
 
   //this is for the drawer
@@ -69,7 +69,7 @@ function ElevateAppBar() {
           <ListItem key={item} disablePadding>
             <ListItemButton
               sx={{ textAlign: "center" }}
-              component={RouterLink}
+              component={RouterLink} //this component prop is what makes the list item a link. it is a link to the route specified in the to prop.
               to={item === "Design Packages" ? "/designpackages" : ""}
             >
               <ListItemText primary={item} />
@@ -126,7 +126,7 @@ function ElevateAppBar() {
               {/* Cart icon */}
               <IconButton component={RouterLink} to="/cart">
                 <Badge badgeContent={totalQuantity} color="primary">
-                  <ShoppingCartIcon fontSize="large" />
+                  <ShoppingCartIcon fontSize="medium" />
                 </Badge>
               </IconButton>
 
@@ -135,6 +135,8 @@ function ElevateAppBar() {
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
                     variant="outlined"
+                    fontSize="medium" //this is for the text inside the avatar
+            
                     sx={{
                       backgroundColor: (theme) => theme.palette.secondary.main,
                     }}

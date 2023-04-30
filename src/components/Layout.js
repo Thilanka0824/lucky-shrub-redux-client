@@ -19,7 +19,7 @@ const Layout = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(authCheck());
-  }, []);
+  }, [auth]);
 
   return (
     <>
