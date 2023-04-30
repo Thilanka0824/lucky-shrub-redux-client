@@ -7,7 +7,7 @@ export const authLogout = createAsyncThunk('auth/authLogout', async (_, thunkAPI
     localStorage.removeItem('jwtToken')
     thunkAPI.dispatch(userLogout())
 })
-
+//createAsyncThunk is a function that takes in a string and a function. The string is the name of the thunk, and the function is the payload creator. The payload creator is a function that returns a promise containing some data, or an error. The payload creator function takes in two arguments: the first argument is the payload, and the second argument is the thunkAPI object. The thunkAPI object contains the dispatch and getState functions, which can be used to dispatch actions and get the current state of the store, respectively. The thunkAPI object also contains a rejectWithValue function, which can be used to reject the promise with a value. The rejectWithValue function takes in a value as an argument, and returns a rejected promise with that value as the payload. The thunkAPI object also contains a dispatch function, which can be used to dispatch actions. The dispatch function takes in an action as an argument, and returns the action as a fulfilled promise.
 export const authCheck = createAsyncThunk('auth/authCheck', async (_, thunkAPI) => {
     try {
         checkAuthToken()

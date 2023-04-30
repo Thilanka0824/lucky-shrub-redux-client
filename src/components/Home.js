@@ -10,6 +10,7 @@ import {
 import { checkAuthToken } from "../lib/checkAuthToken";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import CallScheduling from "./CallScheduling";
 
 const Home = () => {
   const theme = useTheme();
@@ -40,6 +41,7 @@ const Home = () => {
       <Container maxWidth="lg">
         <Box maxWidth="xs" m={3}>
           <Typography variant="h1">Please Login</Typography>
+          <CallScheduling />
         </Box>
         {auth ? (
           <Button variant="contained" onClick={() => dispatch(authLogout())}>
