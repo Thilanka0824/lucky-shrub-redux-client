@@ -13,21 +13,30 @@ import { RemoveCircleOutline, AddCircleOutline } from "@mui/icons-material";
 import { removeItem, updateItemQuantity } from "../redux/cartSlice";
 import { CardMedia } from "@mui/material";
 
+
 export default function Cart() {
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isLargeLot, setIsLargeLot] = useState(false);
 
   useEffect(() => {
     const newTotalPrice = Object.values(cartItems).reduce(
       (accumulator, currentItem) => {
-        return accumulator + currentItem.price * currentItem.quantity;
+        return (
+          accumulator +
+          (isLargeLot && currentItem.price.largeLot
+            ? currentItem.price.largeLot
+            : currentItem.price.standardLot) *
+            currentItem.quantity
+        );
       },
       0
     );
     setTotalPrice(newTotalPrice);
-    console.log("totalPrice", totalPrice)
-  }, [cartItems]);
+    console.log("totalPrice", totalPrice);
+  }, [cartItems, isLargeLot]);
+
 
   const handleRemoveItem = (itemId) => {
     dispatch(removeItem(itemId));
@@ -35,6 +44,10 @@ export default function Cart() {
 
   const handleUpdateItemQuantity = (itemId, newQuantity) => {
     dispatch(updateItemQuantity({ itemId, newQuantity }));
+  };
+  // toggle isLargeLot state
+  const toggleLotSize = () => {
+    setIsLargeLot(!isLargeLot);
   };
 
   return (
@@ -71,7 +84,10 @@ export default function Cart() {
               </Grid>
               <Grid item xs={3} sm={4}>
                 <Typography variant="h6" component="span">
-                  {`${item.title}`} {`${item.price}`}
+                  {item.title} $
+                  {isLargeLot && item.price.largeLot
+                    ? item.price.largeLot
+                    : item.price.standardLot}
                 </Typography>
               </Grid>
               <Grid item xs={4} sm={4}>

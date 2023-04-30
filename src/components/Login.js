@@ -68,7 +68,7 @@ export default function Login() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          Error: {user.message} <br />
+          {user.message} 
          
           <Typography component="h1" variant="h5">
             Sign in

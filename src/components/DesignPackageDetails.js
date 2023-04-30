@@ -4,19 +4,36 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import { dataObject } from "./DesignPackages";
-import fullYardImageSet from "./DesignPackages";
-import { Carousel } from "react-responsive-carousel";
-import { imageAssets } from "./DesignPackages";
-import ImageCarousel from "./ImageCarousel";
 import ScheduleCall from "./ScheduleCall";
 import { List, ListItem, ListItemText } from "@mui/material";
-import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined";
+import { addItem } from "../redux/cartSlice";
+import { useDispatch } from "react-redux";
+import { MenuItem, Select, FormControl, InputLabel } from "@mui/material";
+import { useTheme, useMediaQuery } from "@mui/material";
+
+
 
 const DesignPackageDetails = () => {
+  const theme = useTheme();
+  const isPhone = useMediaQuery(theme.breakpoints.down("sm"));
+
   const { title } = useParams();
+  const dispatch = useDispatch();
+
+
+  // State to hold the selected option
+  const [lotSize, setLotSize] = React.useState("Standard Lot");
+
+  const handleAddToCart = (item) => {
+    dispatch(addItem(item));
+  };
+
+  // Handle lot size selection
+  const handleChange = (event) => {
+    setLotSize(event.target.value);
+  };
+
   const packageData = dataObject.find(
     (item) => item.title.toLowerCase().replace(/\s+/g, "-") === title
   );
@@ -24,10 +41,19 @@ const DesignPackageDetails = () => {
   if (!packageData) {
     return <div>Package not found</div>;
   }
-
+  // Destructure packageData object so we can use the properties directly
   const { id, image, description, price } = packageData;
 
+  // Calculate price based on selected lot size
+  const currentPrice =
+    typeof price === "object" && price.hasOwnProperty("standardLot")
+      ? lotSize === "Standard Lot"
+        ? price.standardLot
+        : price.largeLot
+      : price;
+
   console.log("Item ID:", id);
+  console.log("packageData:", packageData);
 
   return (
     <>
@@ -69,14 +95,10 @@ const DesignPackageDetails = () => {
             <Typography variant="h4" component="h1" gutterBottom>
               {packageData.title} Design
             </Typography>
-            <Typography
-              variant="h6"
-              component="h2"
-              gutterBottom
-              sx={{ margin: "1rem" }}
-            >
-              ${price}
-            </Typography>
+            {/* Display current price */}
+            <Box sx={{ mt: 4, display: "flex", justifyContent: "center" }}>
+              <Typography variant="h5">${currentPrice}</Typography>
+            </Box>
             <hr style={{ width: "20%" }} />
 
             {/* <Typography>{description}</Typography> */}
@@ -102,13 +124,43 @@ const DesignPackageDetails = () => {
                 </ListItem>
               ))}
             </List>
+            {/* Dropdown for lot size */}
             <Box sx={{ mt: 4, display: "flex", justifyContent: "center" }}>
-              <Button variant="contained" color="primary" sx={{ mr: 2 }}>
-                Button 1
+              {/* Wrapping Select component with FormControl for proper styling */}
+              <Grid container spacing={isPhone ? 2 : 0} alignItems="center" justifyContent="center">
+              <Grid item xs={12} sm={6} md={6} lg={6}>
+              <FormControl variant="outlined">
+                <InputLabel htmlFor="lot-size">Lot Size</InputLabel>
+                <Select
+                  value={lotSize}
+                  onChange={handleChange}
+                  label="Lot Size"
+                  inputProps={{
+                    name: "lotSize",
+                    id: "lot-size",
+                  }}
+                  sx={{ padding: "", minWidth: "20rem" }}
+                >
+                  <MenuItem value="Standard Lot">Standard Lot</MenuItem>
+                  <MenuItem value="Large Lot (over 1/2 acre)">
+                    Large Lot (over 1/2 acre)
+                  </MenuItem>
+                </Select>
+              </FormControl>
+              </Grid>
+              {/* </Box> */}
+              <Grid item xs={12} sm={6} md={6} lg={6}>
+              <Button
+                variant="contained"
+                color="secondary"
+                sx={{ padding: "1rem", ml: 2, minWidth: "20rem" }}
+                // spreading the packageData object and adding the id property
+                onClick={() => handleAddToCart({ ...packageData, id })}
+              >
+                PURCHASE
               </Button>
-              <Button variant="contained" color="secondary">
-                Button 2
-              </Button>
+              </Grid>
+              </Grid>
             </Box>
           </Box>
         </Grid>
@@ -123,7 +175,7 @@ const DesignPackageDetails = () => {
             </Typography>
             <Box
               sx={{
-                backgroundColor: "#ffffff",
+                backgroundColor: "#C3CBBE",
                 borderRadius: "20px",
                 padding: "1rem",
               }}
@@ -244,7 +296,7 @@ const DesignPackageDetails = () => {
             </Typography>
             <Box
               sx={{
-                backgroundColor: "#C3CBBE",
+                backgroundColor: "#ffffff",
                 borderRadius: "20px",
                 padding: "1rem",
               }}
@@ -270,12 +322,13 @@ const DesignPackageDetails = () => {
                   </ListItem>
                   <ListItem>
                     <Typography sx={{ lineHeight: "1.5" }}>
-                      - Check-in calls during your design process 
+                      - Check-in calls during your design process
                     </Typography>
                   </ListItem>
                   <ListItem>
                     <Typography sx={{ lineHeight: "1.5" }}>
-                      - Landscaping design for entire property (front, back, and side yards)
+                      - Landscaping design for entire property (front, back, and
+                      side yards)
                     </Typography>
                   </ListItem>
                   <ListItem>
@@ -297,7 +350,8 @@ const DesignPackageDetails = () => {
                   </ListItem>
                   <ListItem>
                     <Typography sx={{ lineHeight: "1.5" }}>
-                      - Lighting design (pathway, uplighting, downlighting, and more)
+                      - Lighting design (pathway, uplighting, downlighting, and
+                      more)
                     </Typography>
                   </ListItem>
                   <ListItem>

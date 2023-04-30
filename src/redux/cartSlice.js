@@ -29,6 +29,12 @@ const cartSlice = createSlice({
           ...item,
           quantity: 1,
           image: item.image,
+          price: {
+            standardLot: Number(item.price.standardLot),
+            ...(item.price.largeLot
+              ? { largeLot: Number(item.price.largeLot) }
+              : {}),
+          },
         };
       } else {
         existingItem.quantity++;

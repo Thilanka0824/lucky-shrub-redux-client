@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useSelector, useDispatch } from "react-redux";
-import { Link as RouterLink } from "react-router-dom";
+import { Navigate, Link as RouterLink } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
@@ -40,24 +40,38 @@ function ElevateAppBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Mobile drawer menu state
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [anchorElUser, setAnchorElUser] = React.useState(null); //this is for the user menu
 
+  // User menu states
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  // Drawer menu toggling
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
+  // User menu opening
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget); //this sets the anchor for the user menu. the anchor is the button that is clicked to open the menu.
+    setAnchorElUser(event.currentTarget);
   };
 
+  // User menu closing
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null); 
+    setAnchorElUser(null);
   };
 
-  //this is for the drawer
+  // Effect for redirecting when auth state changes
+//   useEffect(() => {
+//     if (!auth) {
+//       navigate("/", { replace: true });
+//     }
+//   }, [auth, navigate]);
+
+  // Drawer container
   const container = undefined;
 
+  // Drawer content
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
@@ -69,7 +83,7 @@ function ElevateAppBar() {
           <ListItem key={item} disablePadding>
             <ListItemButton
               sx={{ textAlign: "center" }}
-              component={RouterLink} //this component prop is what makes the list item a link. it is a link to the route specified in the to prop.
+              component={RouterLink}
               to={item === "Design Packages" ? "/designpackages" : ""}
             >
               <ListItemText primary={item} />
@@ -131,51 +145,66 @@ function ElevateAppBar() {
               </IconButton>
 
               {/* User avatar */}
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    variant="outlined"
-                    fontSize="medium" //this is for the text inside the avatar
-            
-                    sx={{
-                      backgroundColor: (theme) => theme.palette.secondary.main,
-                    }}
+              {auth ? (
+                <>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar
+                        variant="outlined"
+                        fontSize="medium"
+                        sx={{
+                          backgroundColor: (theme) =>
+                            theme.palette.secondary.main,
+                        }}
+                      >
+                        {user ? user.username[0] : "U"}
+                      </Avatar>
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    anchorEl={anchorElUser}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
                   >
-                    {user ? user.username[0] : "U"}
-                  </Avatar>
-                </IconButton>
-              </Tooltip>
-              <Menu
-                anchorEl={anchorElUser}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((item) =>
-                  item.text === "Logout" ? (
-                    <MenuItem
-                      key={item.text}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        dispatch(authLogout());
-                        handleCloseUserMenu();
-                      }}
-                      component={RouterLink}
-                      to={item.route}
-                    >
-                      {item.text}
-                    </MenuItem>
-                  ) : (
-                    <MenuItem
-                      key={item.text}
-                      onClick={handleCloseUserMenu}
-                      component={RouterLink}
-                      to={item.route}
-                    >
-                      {item.text}
-                    </MenuItem>
-                  )
-                )}
-              </Menu>
+                    {settings.map((item) =>
+                      item.text === "Logout" ? (
+                        <MenuItem
+                          key={item.text}
+                          onClick={(event) => {
+                            event.preventDefault();
+
+                            dispatch(authLogout());
+                            handleCloseUserMenu();
+                          }}
+                          component={RouterLink}
+                          to={item.route}
+                        >
+                          {item.text}
+                        </MenuItem>
+                      ) : (
+                        <MenuItem
+                          key={item.text}
+                          onClick={handleCloseUserMenu}
+                          component={RouterLink}
+                          to={item.route}
+                        >
+                          {item.text}
+                        </MenuItem>
+                      )
+                    )}
+                  </Menu>
+                </>
+              ) : (
+                <Link
+                  component={RouterLink}
+                  to="/login"
+                  color="primary"
+                  variant="contained"
+                    sx={{ justifySelf: "end" }}
+                >
+                  Login
+                </Link>
+              )}
             </Box>
           </Box>
         </Toolbar>

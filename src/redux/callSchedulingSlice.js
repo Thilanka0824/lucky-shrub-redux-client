@@ -8,6 +8,7 @@ export const callSchedulingSlice = createSlice({
     reducers: {
         addScheduledCall: (state, action) => {
             state.scheduledCalls.push(action.payload)
+            console.log(state.scheduledCalls)
         }
     }
 });

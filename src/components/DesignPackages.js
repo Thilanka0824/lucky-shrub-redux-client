@@ -18,6 +18,7 @@ import { styled } from "@mui/system";
 import contactUs from "../lib/contactUs";
 import DesignCompTable from "./DesignCompTable";
 import ScheduleCall from "./ScheduleCall";
+import FloatingButton from "./FloatingButton";
 
 export const imageAssets = [
   "/image-assets/full-yard.jpg",
@@ -47,7 +48,7 @@ export const imagesThirdCard = [
   "/image-assets/back-yard/back-yard-5.webp",
   "/image-assets/small-space/small-space-2.webp",
   "/image-assets/front-yard/front-yard-8.webp",
-  "/image-assets/curb-appeal/curb-appeal-7.png",
+  "/image-assets/curb-appeal/curb-appeal-7.webp",
   "/image-assets/outdoor-transformation/outdoor-1.webp",
   "/image-assets/botanical/botanical-3.webp",
   "/image-assets/premium/premium-2.webp",
@@ -62,7 +63,7 @@ export const dataObject = [
     image: imageAssets[0],
     secondCard: imagesSecondCard[0],
     thirdCard: imagesThirdCard[0],
-    price: 1695,
+    price: { standardLot: 1695, largeLot: 2395 },
     boldFace:
       "Refresh the landscaping, hardscaping and more for your entire property",
     listItems: [
@@ -80,7 +81,7 @@ export const dataObject = [
     image: imageAssets[1],
     secondCard: imagesSecondCard[1],
     thirdCard: imagesThirdCard[1],
-    price: 1395,
+    price: { standardLot: 1395, largeLot: 1995 },
     boldFace:
       "Refresh your backyard landscaping, patio, and more to create your dream space",
     listItems: [
@@ -98,7 +99,7 @@ export const dataObject = [
     image: imageAssets[2],
     secondCard: imagesSecondCard[2],
     thirdCard: imagesThirdCard[2],
-    price: 995,
+    price: {standardLot: 995},
     boldFace: "Turn your small patio, side yard, or rooftop into a mini oasis",
     listItems: [
       "Must be <500 sq feet of design-able space (one single, continuous area)",
@@ -115,7 +116,7 @@ export const dataObject = [
     image: imageAssets[3],
     secondCard: imagesSecondCard[3],
     thirdCard: imagesThirdCard[3],
-    price: 1095,
+    price: { standardLot: 1095, largeLot: 1695 },
     boldFace: "Refresh your front yard landscaping, walkways and more",
     listItems: [
       "Front yard, backyard and side yard design",
@@ -132,7 +133,7 @@ export const dataObject = [
     image: imageAssets[4],
     secondCard: imagesSecondCard[4],
     thirdCard: imagesThirdCard[4],
-    price: 1795,
+    price: {standardLot: 1795, largeLot: 2495},
     boldFace:
       "Reimagine your front landscaping and home exterior to boost curb appeal",
     listItems: [
@@ -146,12 +147,11 @@ export const dataObject = [
   {
     id: "5",
     title: "Outdoor Transformation",
-    description:
-      "Ready to fully transform your property? Redesign your home exterior and all landscaping",
+    description: "Ready to fully transform your property?",
     image: imageAssets[5],
     secondCard: imagesSecondCard[5],
     thirdCard: imagesThirdCard[5],
-    price: 2495,
+    price: {standardLot:2495, largeLot: 3095},
     boldFace:
       "Refresh the landscaping, hardscaping and more for your entire property",
     listItems: [
@@ -169,7 +169,7 @@ export const dataObject = [
     image: imageAssets[6],
     secondCard: imagesSecondCard[6],
     thirdCard: imagesThirdCard[6],
-    price: 895,
+    price: {standardLot: 895},
     boldFace:
       "Refresh your yard’s plants, trees, and groundcover with a custom planting design",
     listItems: [
@@ -188,7 +188,7 @@ export const dataObject = [
     image: imageAssets[7],
     secondCard: imagesSecondCard[7],
     thirdCard: imagesThirdCard[7],
-    price: 3495,
+    price: {standardLot:3495, largeLot: 4095},
 
     boldFace:
       "Our most personalized design service, with extra hands-on support to redesign your entire property with ease",
@@ -215,8 +215,8 @@ export const dataObject = [
 const buttonStyleBlack = {
   color: "black",
   backgroundColor: "white",
-  border: "1px solid black",
-  borderRadius: "25px",
+  // border: "1px solid black",
+  // borderRadius: "25px",
   mb: 1,
   ":hover": {
     backgroundColor: "#4E5A44",
@@ -336,6 +336,13 @@ export default function Album() {
                       {item.title}
                     </Typography>
                     <Typography>{item.description}</Typography>
+                    <Typography variant="h6" sx={{ mt: 2 }}>
+                      {item.contact
+                        ? ""
+                        : item.price.standardLot
+                        ? `$${item.price.standardLot}`
+                        : `$${item.price}`}
+                    </Typography>
                   </CardContent>
                   <CardActions sx={{ justifyContent: "center" }}>
                     {item.contact ? (
@@ -349,16 +356,6 @@ export default function Album() {
                       </Button>
                     ) : (
                       <>
-                        <Button
-                          variant="outlined"
-                          size="large"
-                          sx={buttonStyleBlack}
-                          onClick={() =>
-                            handleAddToCart({ ...item, id: index })
-                          }
-                        >
-                          Starting at ${item.price}
-                        </Button>
                         <Button
                           component={Link}
                           to={`/designpackages/${item.title
@@ -379,7 +376,7 @@ export default function Album() {
           ))}
         </Grid>
       </Container>
-      <ScheduleCall/>
+      <ScheduleCall />
       <Container
         sx={{ py: 8, backgroundColor: "inherit", minHeight: "70vh" }}
         maxWidth="xl"
@@ -417,6 +414,7 @@ export default function Album() {
                   fontSize: "1.5rem",
                   margin: "0 2rem 2rem 2rem",
                   backgroundColor: "#E5E7E3",
+                  padding: "1rem",
                 }}
               >
                 We're here to help
@@ -469,6 +467,7 @@ export default function Album() {
           </Grid>
         </Grid>
       </Container>
+      <FloatingButton />
     </main>
   );
 }
