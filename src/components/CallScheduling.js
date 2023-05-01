@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTheme } from "@mui/material/styles";
 
 import {
   Button,
@@ -12,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { addScheduledCall } from "../redux/callSchedulingSlice";
 
 const CallScheduling = () => {
+  const theme = useTheme();
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
@@ -39,7 +41,19 @@ const CallScheduling = () => {
 
   return (
     <>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{
+          backgroundColor: theme.palette.grey[800],
+          color: theme.palette.common.white,
+          borderRadius: 2,
+          minWidth: "18rem",
+          minHeight: "3.5rem",
+          marginBottom: theme.spacing(1),
+        }}
+        onClick={handleClickOpen}
+      >
         Schedule a Call
       </Button>
       <Dialog open={open} onClose={handleClose}>

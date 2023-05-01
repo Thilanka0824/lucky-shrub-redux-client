@@ -87,7 +87,7 @@ const FloatingButton = () => {
                 sx={{ justifySelf: "center" }}
               >
                 <img
-                  src="/image-assets/lucky-shrub-green.png"
+                  src="/image-assets/lucky-shrub-red.png"
                   alt="Logo"
                   width="85rem"
                   style={{ margin: 7, cursor: "pointer" }}

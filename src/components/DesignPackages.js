@@ -363,7 +363,7 @@ export default function Album() {
                             .replace(/\s+/g, "-")}`}
                           variant="outlined"
                           size="large"
-                          sx={{ ...buttonStyleBlack, ml: 2 }}
+                          sx={{ ...buttonStyleBlack,  }}
                         >
                           View Details
                         </Button>
