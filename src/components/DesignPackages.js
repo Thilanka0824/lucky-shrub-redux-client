@@ -409,12 +409,15 @@ export default function Album() {
               <Typography
                 variant="h3"
                 sx={{
+                  textAlign: "center",
                   fontFamily: "Roboto, sans-serif",
                   fontWeight: 400,
                   fontSize: "1.5rem",
                   margin: "0 2rem 2rem 2rem",
                   backgroundColor: "#E5E7E3",
                   padding: "1rem",
+                  minWidth: "25rem",
+                  borderRadius: "5px",
                 }}
               >
                 We're here to help

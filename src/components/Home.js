@@ -30,7 +30,6 @@ const Home = () => {
     <>
       <Box
         sx={{
-          
           backgroundImage: `url('/image-assets/home-main-photo-lucky-shrub.jpeg')`,
           backgroundSize: "cover",
           backgroundPosition: "left",
@@ -63,6 +62,9 @@ const Home = () => {
                 minWidth: "18rem",
                 minHeight: "3.5rem",
                 marginBottom: theme.spacing(1),
+                ":hover": {
+                  backgroundColor: theme.palette.grey[300],
+                },
               }}
             >
               Explore Design Packages
@@ -72,7 +74,7 @@ const Home = () => {
         </Container>
         <FloatingButton />
       </Box>
-      <HomeHero/>
+      <HomeHero />
       <ScheduleCall />
     </>
   );

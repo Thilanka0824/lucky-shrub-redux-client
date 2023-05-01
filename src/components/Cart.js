@@ -8,13 +8,16 @@ import {
   IconButton,
   Divider,
   Grid,
+  Button,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { RemoveCircleOutline, AddCircleOutline } from "@mui/icons-material";
 import { removeItem, updateItemQuantity } from "../redux/cartSlice";
 import { CardMedia } from "@mui/material";
 
 
 export default function Cart() {
+  const theme = useTheme();
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
@@ -50,6 +53,17 @@ export default function Cart() {
     setIsLargeLot(!isLargeLot);
   };
 
+  // this function will be called when the user clicks the purchase button
+  const handlePurchase = () => {
+    const payload = {
+      cartItems,
+      totalPrice,
+      isLargeLot,
+    };
+    console.log("Payload:", payload);
+    // Send the payload to the backend here
+  };
+
   return (
     <Box
       sx={{
@@ -69,68 +83,99 @@ export default function Cart() {
         <Card key={item.id} sx={{ marginBottom: 2 }}>
           <CardContent>
             <Grid container alignItems="center" justifyContent="space-between">
-              <Grid item xs={3} sm={2}>
-                <CardMedia
-                  component="img"
-                  sx={{
-                    width: "50px",
-                    height: "50px",
-                    objectFit: "cover",
-                    marginRight: 2,
-                  }}
-                  image={item.image}
-                  alt={item.title}
-                />
+              <Grid item xs={12} sm={2}>
+                <Box display="flex" justifyContent="center">
+                  <CardMedia
+                    component="img"
+                    sx={{
+                      width: "50px",
+                      height: "50px",
+                      objectFit: "cover",
+                      marginRight: 0,
+                    }}
+                    image={item.image}
+                    alt={item.title}
+                  />
+                </Box>
               </Grid>
-              <Grid item xs={3} sm={4}>
-                <Typography variant="h6" component="span">
-                  {item.title} $
-                  {isLargeLot && item.price.largeLot
-                    ? item.price.largeLot
-                    : item.price.standardLot}
-                </Typography>
-              </Grid>
-              <Grid item xs={4} sm={4}>
-                <Box>
-                  <IconButton
-                    onClick={() =>
-                      handleUpdateItemQuantity(item.id, item.quantity - 1)
-                    }
-                    disabled={item.quantity <= 1}
-                  >
-                    <RemoveCircleOutline />
-                  </IconButton>
-                  <Typography
-                    variant="subtitle1"
-                    component="span"
-                    sx={{ marginX: 1 }}
-                  >
-                    {item.quantity}
+              <Grid item xs={12} sm={4}>
+                <Box display="flex" justifyContent="center">
+                  <Typography variant="h6" component="span">
+                    {item.title} $
+                    {isLargeLot && item.price.largeLot
+                      ? item.price.largeLot
+                      : item.price.standardLot}
                   </Typography>
-                  <IconButton
-                    onClick={() =>
-                      handleUpdateItemQuantity(item.id, item.quantity + 1)
-                    }
-                  >
-                    <AddCircleOutline />
-                  </IconButton>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <Box display="flex" justifyContent="center">
+                  <Box>
+                    <IconButton
+                      onClick={() =>
+                        handleUpdateItemQuantity(item.id, item.quantity - 1)
+                      }
+                      disabled={item.quantity <= 1}
+                    >
+                      <RemoveCircleOutline />
+                    </IconButton>
+                    <Typography
+                      variant="subtitle1"
+                      component="span"
+                      sx={{ marginX: 1 }}
+                    >
+                      {item.quantity}
+                    </Typography>
+                    <IconButton
+                      onClick={() =>
+                        handleUpdateItemQuantity(item.id, item.quantity + 1)
+                      }
+                    >
+                      <AddCircleOutline />
+                    </IconButton>
+                  </Box>
                 </Box>
               </Grid>
 
-              <Grid item xs={2} sm={2}>
-                <IconButton
-                  onClick={() => handleRemoveItem(item.id)}
-                  edge="end"
-                  color="error"
-                >
-                  <RemoveCircleOutline />
-                </IconButton>
+              <Grid item xs={12} sm={2}>
+                <Box display="flex" justifyContent="center">
+                  <IconButton
+                    onClick={() => handleRemoveItem(item.id)}
+                    edge="end"
+                    color="error"
+                  >
+                    <RemoveCircleOutline />
+                  </IconButton>
+                </Box>
               </Grid>
             </Grid>
           </CardContent>
           <Divider />
         </Card>
       ))}
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{
+          marginTop: 2,
+          display: "block",
+          marginLeft: "auto",
+          marginRight: "auto",
+          backgroundColor: theme.palette.grey[700],
+          color: theme.palette.grey[200],
+          borderRadius: 2,
+          minWidth: "18rem",
+          minHeight: "3.5rem",
+          marginBottom: theme.spacing(1),
+          ":hover": {
+            backgroundColor: theme.palette.grey[100],
+            color: theme.palette.grey[900],
+          },
+        }}
+        onClick={handlePurchase}
+      >
+        Purchase
+      </Button>
     </Box>
   );
 }
