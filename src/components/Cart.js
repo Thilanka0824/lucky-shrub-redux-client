@@ -168,8 +168,8 @@ export default function Cart() {
           minHeight: "3.5rem",
           marginBottom: theme.spacing(1),
           ":hover": {
-            backgroundColor: theme.palette.grey[100],
-            color: theme.palette.grey[900],
+            backgroundColor: theme.palette.common.black,
+            color: theme.palette.common.white,
           },
         }}
         onClick={handlePurchase}
