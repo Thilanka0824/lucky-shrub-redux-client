@@ -10,16 +10,12 @@ import { useSelector, useDispatch } from "react-redux";
 import Footer from "./Footer";
 
 const Layout = (props) => {
-  // verify token exists
-  //
-  // let auth = checkAuthToken()
-  //
-  // check authentication with backend
   const auth = useSelector((state) => state.auth.isAuth);
   const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch(authCheck());
-  }, [auth]);
+  }, []);
 
   return (
     <>
@@ -27,7 +23,7 @@ const Layout = (props) => {
       <ElevationScroll {...props} />
       {/* {auth ? <Outlet /> : <Navigate to='/login' />} */}
       <Outlet />
-      <Footer/>
+      <Footer />
     </>
   );
 };

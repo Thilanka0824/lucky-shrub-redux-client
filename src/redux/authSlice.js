@@ -6,7 +6,7 @@ import Axios from "../lib/Axios";
 export const authLogout = createAsyncThunk(
   "auth/authLogout",
   async (_, thunkAPI) => {
-    localStorage.removeItem("jwtToken");
+    await localStorage.removeItem("jwtToken");
     thunkAPI.dispatch(userLogout());
     // thunkAPI.dispatch(authFailure());
   }

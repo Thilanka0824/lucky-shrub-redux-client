@@ -62,11 +62,11 @@ function ElevateAppBar() {
   };
 
   // Effect for redirecting when auth state changes
-//   useEffect(() => {
-//     if (!auth) {
-//       navigate("/", { replace: true });
-//     }
-//   }, [auth, navigate]);
+  //   useEffect(() => {
+  //     if (!auth) {
+  //       navigate("/", { replace: true });
+  //     }
+  //   }, [auth, navigate]);
 
   // Drawer container
   const container = undefined;
@@ -170,9 +170,7 @@ function ElevateAppBar() {
                       item.text === "Logout" ? (
                         <MenuItem
                           key={item.text}
-                          onClick={(event) => {
-                            event.preventDefault();
-
+                          onClick={() => {
                             dispatch(authLogout());
                             handleCloseUserMenu();
                           }}
@@ -200,7 +198,7 @@ function ElevateAppBar() {
                   to="/login"
                   color="primary"
                   variant="contained"
-                    sx={{ justifySelf: "end" }}
+                  sx={{ justifySelf: "end" }}
                 >
                   Login
                 </Link>
