@@ -127,39 +127,59 @@ const DesignPackageDetails = () => {
             {/* Dropdown for lot size */}
             <Box sx={{ mt: 4, display: "flex", justifyContent: "center" }}>
               {/* Wrapping Select component with FormControl for proper styling */}
-              <Grid container spacing={isPhone ? 2 : 0} alignItems="center" justifyContent="center">
-              <Grid item xs={12} sm={6} md={6} lg={6}>
-              <FormControl variant="outlined">
-                <InputLabel htmlFor="lot-size">Lot Size</InputLabel>
-                <Select
-                  value={lotSize}
-                  onChange={handleChange}
-                  label="Lot Size"
-                  inputProps={{
-                    name: "lotSize",
-                    id: "lot-size",
-                  }}
-                  sx={{ padding: "", minWidth: "20rem" }}
-                >
-                  <MenuItem value="Standard Lot">Standard Lot</MenuItem>
-                  <MenuItem value="Large Lot (over 1/2 acre)">
-                    Large Lot (over 1/2 acre)
-                  </MenuItem>
-                </Select>
-              </FormControl>
-              </Grid>
-              {/* </Box> */}
-              <Grid item xs={12} sm={6} md={6} lg={6}>
-              <Button
-                variant="contained"
-                color="secondary"
-                sx={{ padding: "1rem", ml: 2, minWidth: "20rem" }}
-                // spreading the packageData object and adding the id property
-                onClick={() => handleAddToCart({ ...packageData, id })}
+              <Grid
+                container
+                spacing={isPhone ? 2 : 0}
+                alignItems="center"
+                justifyContent="center"
               >
-                PURCHASE
-              </Button>
-              </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={6}>
+                  <FormControl variant="outlined">
+                    <InputLabel htmlFor="lot-size">Lot Size</InputLabel>
+                    <Select
+                      value={lotSize}
+                      onChange={handleChange}
+                      label="Lot Size"
+                      inputProps={{
+                        name: "lotSize",
+                        id: "lot-size",
+                      }}
+                      sx={{ padding: "", minWidth: "20rem" }}
+                    >
+                      <MenuItem value="Standard Lot">Standard Lot</MenuItem>
+                      <MenuItem value="Large Lot (over 1/2 acre)">
+                        Large Lot (over 1/2 acre)
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                {/* </Box> */}
+                <Grid item xs={12} sm={6} md={6} lg={6}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    sx={{
+                      marginTop: 1,
+                      display: "block",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      backgroundColor: theme.palette.grey[700],
+                      color: theme.palette.grey[200],
+                      borderRadius: 2,
+                      minWidth: "20rem",
+                      minHeight: "3.5rem",
+                      marginBottom: theme.spacing(1),
+                      ":hover": {
+                        backgroundColor: theme.palette.common.black,
+                        color: theme.palette.common.white,
+                      },
+                    }}
+                    // spreading the packageData object and adding the id property
+                    onClick={() => handleAddToCart({ ...packageData, id })}
+                  >
+                    Add to Cart
+                  </Button>
+                </Grid>
               </Grid>
             </Box>
           </Box>

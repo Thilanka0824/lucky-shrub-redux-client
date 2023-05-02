@@ -198,7 +198,7 @@ function ElevateAppBar() {
                   to="/login"
                   color="primary"
                   variant="contained"
-                  sx={{ justifySelf: "end" }}
+                  sx={{ justifySelf: "end", textDecoration: "none" }}
                 >
                   Login
                 </Link>

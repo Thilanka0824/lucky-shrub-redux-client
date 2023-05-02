@@ -55,7 +55,7 @@ export const userSlice = createSlice({
     // asyncronous set state
     extraReducers: builder => {
         builder
-            .addCase(fetchUser.fulfilled, (state, action) => {
+            .addCase(fetchUser.fulfilled, (state, action) => { //step four
                 state.username = action.payload.user.username
                 state.email = action.payload.user.email
                 state.status = 'fulfilled'

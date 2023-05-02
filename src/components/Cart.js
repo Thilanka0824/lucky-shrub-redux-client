@@ -74,7 +74,7 @@ export default function Cart() {
       }}
     >
       <Typography variant="h4" component="h2" gutterBottom>
-        Shopping Cart
+        Cart
       </Typography>
       <Typography variant="h6" component="p">
         Total Price: ${totalPrice.toFixed(2)}
@@ -174,7 +174,7 @@ export default function Cart() {
         }}
         onClick={handlePurchase}
       >
-        Purchase
+        Checkout
       </Button>
     </Box>
   );
