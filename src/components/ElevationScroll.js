@@ -23,6 +23,7 @@ import { Tooltip } from "@mui/material";
 import { Link } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { Button } from "@mui/material";
 
 const drawerWidth = 240;
 const navItems = ["Design Packages", "How It Works", "Contact"];
@@ -113,9 +114,17 @@ function ElevateAppBar() {
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{ height: "100", justifySelf: "start" }}
+              sx={{
+                height: "100",
+                justifySelf: "start",
+                border: "1px solid black",
+                borderRadius: "22px"
+              }}
             >
               <MenuIcon />
+              <Typography>
+                Menu
+              </Typography>
             </IconButton>
 
             {/* Logo */}
@@ -157,7 +166,7 @@ function ElevateAppBar() {
                             theme.palette.secondary.main,
                         }}
                       >
-                        {user ? user.username[0] : "U"}
+                        {user ? user.username[0] : ""}
                       </Avatar>
                     </IconButton>
                   </Tooltip>
