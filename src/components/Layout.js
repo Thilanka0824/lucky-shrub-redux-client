@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+ import React, { useEffect } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import ElevationScroll from "./ElevationScroll";
 import { authCheck } from "../redux/authSlice";
