@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/lucky-shrub-redux-client/static/css/main.073c9b0a.css",
+    "main.js": "/lucky-shrub-redux-client/static/js/main.e09fa40f.js",
+    "static/js/787.f51a0d1e.chunk.js": "/lucky-shrub-redux-client/static/js/787.f51a0d1e.chunk.js",
+    "index.html": "/lucky-shrub-redux-client/index.html",
+    "main.073c9b0a.css.map": "/lucky-shrub-redux-client/static/css/main.073c9b0a.css.map",
+    "main.e09fa40f.js.map": "/lucky-shrub-redux-client/static/js/main.e09fa40f.js.map",
+    "787.f51a0d1e.chunk.js.map": "/lucky-shrub-redux-client/static/js/787.f51a0d1e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.e09fa40f.js"
+  ]
+}
