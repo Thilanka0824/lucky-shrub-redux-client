@@ -99,7 +99,7 @@ export const dataObject = [
     image: imageAssets[2],
     secondCard: imagesSecondCard[2],
     thirdCard: imagesThirdCard[2],
-    price: {standardLot: 995},
+    price: { standardLot: 995 },
     boldFace: "Turn your small patio, side yard, or rooftop into a mini oasis",
     listItems: [
       "Must be <500 sq feet of design-able space (one single, continuous area)",
@@ -133,7 +133,7 @@ export const dataObject = [
     image: imageAssets[4],
     secondCard: imagesSecondCard[4],
     thirdCard: imagesThirdCard[4],
-    price: {standardLot: 1795, largeLot: 2495},
+    price: { standardLot: 1795, largeLot: 2495 },
     boldFace:
       "Reimagine your front landscaping and home exterior to boost curb appeal",
     listItems: [
@@ -151,7 +151,7 @@ export const dataObject = [
     image: imageAssets[5],
     secondCard: imagesSecondCard[5],
     thirdCard: imagesThirdCard[5],
-    price: {standardLot:2495, largeLot: 3095},
+    price: { standardLot: 2495, largeLot: 3095 },
     boldFace:
       "Refresh the landscaping, hardscaping and more for your entire property",
     listItems: [
@@ -169,7 +169,7 @@ export const dataObject = [
     image: imageAssets[6],
     secondCard: imagesSecondCard[6],
     thirdCard: imagesThirdCard[6],
-    price: {standardLot: 895},
+    price: { standardLot: 895 },
     boldFace:
       "Refresh your yard’s plants, trees, and groundcover with a custom planting design",
     listItems: [
@@ -188,7 +188,7 @@ export const dataObject = [
     image: imageAssets[7],
     secondCard: imagesSecondCard[7],
     thirdCard: imagesThirdCard[7],
-    price: {standardLot:3495, largeLot: 4095},
+    price: { standardLot: 3495, largeLot: 4095 },
 
     boldFace:
       "Our most personalized design service, with extra hands-on support to redesign your entire property with ease",
@@ -360,10 +360,10 @@ export default function Album() {
                           component={Link}
                           to={`/designpackages/${item.title
                             .toLowerCase()
-                            .replace(/\s+/g, "-")}`}
+                            .replace(/\s+/g, "-")}`} // this is the link to the design package page. it will be the same as the title of the package
                           variant="outlined"
                           size="large"
-                          sx={{ ...buttonStyleBlack,  }}
+                          sx={{ ...buttonStyleBlack }}
                         >
                           View Details
                         </Button>

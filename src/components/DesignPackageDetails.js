@@ -12,15 +12,12 @@ import { useDispatch } from "react-redux";
 import { MenuItem, Select, FormControl, InputLabel } from "@mui/material";
 import { useTheme, useMediaQuery } from "@mui/material";
 
-
-
 const DesignPackageDetails = () => {
   const theme = useTheme();
   const isPhone = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { title } = useParams();
   const dispatch = useDispatch();
-
 
   // State to hold the selected option
   const [lotSize, setLotSize] = React.useState("Standard Lot");
@@ -35,6 +32,7 @@ const DesignPackageDetails = () => {
   };
 
   const packageData = dataObject.find(
+    //.replace is used to remove spaces from the title and replace them with dashes. This is done because the title in the URL is in the format of "package-name" and not "Package Name"
     (item) => item.title.toLowerCase().replace(/\s+/g, "-") === title
   );
 
