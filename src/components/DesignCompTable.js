@@ -54,7 +54,7 @@ const rows = [
   createData("United Kingdom", "GB", 67545757, 242495),
   createData("Russia", "RU", 146793744, 17098246),
   createData("Nigeria", "NG", 200962417, 923768),
-  createData("Brazil", "BR", 210147125, 8515767),
+  createData("Brazil", "BR", 210147125, 8515766),
 ];
 
 export default function DesignCompTable() {
